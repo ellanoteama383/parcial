@@ -12,14 +12,14 @@ import java.util.ArrayList;
  * @author invitado
  */
 public class PronosticoVentas {
-    private float aniosACalcular;
+    private int aniosACalcular;
     private float promedioVariacion;
     private float crecimientoVentas;
     private ArrayList<Venta> ventas;
     private float pronosticoVentas;
 
 
-    public PronosticoVentas(float aniosACalcular,float promedioVariacion) {
+    public PronosticoVentas(int aniosACalcular,float promedioVariacion) {
         this.aniosACalcular = aniosACalcular;
         this.promedioVariacion = promedioVariacion;
        
@@ -34,11 +34,15 @@ public class PronosticoVentas {
         
     }
 
+    public PronosticoVentas() {
+    }
+    
+
     public float getAniosACalcular() {
         return aniosACalcular;
     }
 
-    public void setAniosACalcular(float aniosACalcular) {
+    public void setAniosACalcular(int aniosACalcular) {
         this.aniosACalcular = aniosACalcular;
     }
 

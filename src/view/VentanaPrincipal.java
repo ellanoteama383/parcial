@@ -5,18 +5,54 @@
  */
 package view;
 
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import model.PronosticoVentas;
+
 /**
  *
  * @author invitado
  */
-public class PronosticoVentas extends javax.swing.JFrame {
-
+public class VentanaPrincipal extends javax.swing.JFrame {
+    PronosticoVentas pronostica;
+    JTable table;
+     private final String []nombres= {"Año","Cantidad ventas","Crecimiento","Porcentaje crecimiento"};
+     private Object [][]valores;
+    
     /**
      * Creates new form PronosticoVentas
      */
-    public PronosticoVentas() {
+    public VentanaPrincipal() {
+   
+        pronostica = new PronosticoVentas(5,5);
         initComponents();
+
+       llenarMatriz();
+      
+        
+        
     }
+    public void llenarMatriz(){
+       
+         Object[][]matriz;
+        matriz = new Object[5][5];
+        for(int i=0;i<5;i++){
+            matriz[i][0]=pronostica.getVentas().get(i).getAnio();
+            matriz[i][1]=pronostica.getVentas().get(i).getCantidadDeVentas();
+            matriz[i][2]=pronostica.getCrecimientoVentas();
+            matriz[i][3]=pronostica.getPronosticoVentas();
+            matriz[i][4]=pronostica.getPromedioVariacion();
+            
+        }
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            matriz,
+            
+            new String [] {
+                "Año", "Cantidad ventas", "Crecimiento ventas", "Porcentaje crecimiento", "Promedio Variacion"
+            }
+        ));
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,9 +74,9 @@ public class PronosticoVentas extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtCantidadAnios = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jT = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,6 +85,11 @@ public class PronosticoVentas extends javax.swing.JFrame {
         jLabel2.setText("Cantidad ventas");
 
         btnAgregarAnio.setText("Agregar año");
+        btnAgregarAnio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarAnioActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Controles");
 
@@ -62,21 +103,20 @@ public class PronosticoVentas extends javax.swing.JFrame {
 
         jLabel4.setText("Cantidad :");
 
-        jT.setAutoCreateRowSorter(true);
-        jT.setModel(new javax.swing.table.DefaultTableModel(
+        jLabel5.setText("Historico Ventas");
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Año", "Cantidad de ventas (Y)", "Crecimiento", "Porcentaje de variaciones"
+                "Año", "Cantidad ventas", "Crecimiento ventas", "Porcentaje crecimiento", "Promedio Variacion"
             }
         ));
-        jScrollPane1.setViewportView(jT);
-
-        jLabel5.setText("Historico Ventas");
+        jScrollPane2.setViewportView(jTable2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -85,31 +125,28 @@ public class PronosticoVentas extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtCantidadVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(lblDatosV)
-                                    .addComponent(jLabel3)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addGap(58, 58, 58)
-                                        .addComponent(txtCantidadAnios)))
-                                .addGap(131, 131, 131)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnModificarAnio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnNuevoPronostico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(btnBorrarAnio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnAgregarAnio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(0, 127, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtCantidadVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblDatosV)
+                            .addComponent(jLabel3)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(58, 58, 58)
+                                .addComponent(txtCantidadAnios)))
+                        .addGap(131, 131, 131)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnModificarAnio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnNuevoPronostico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1)
+                            .addComponent(btnBorrarAnio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAgregarAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,13 +177,22 @@ public class PronosticoVentas extends javax.swing.JFrame {
                             .addComponent(txtCantidadAnios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(15, 15, 15)
                 .addComponent(jLabel5)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(266, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(203, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAgregarAnioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAnioActionPerformed
+        if(evt.getSource()==btnAgregarAnio){
+            String cantidad;
+            cantidad=txtCantidadVentas.getText();
+            
+            pronostica.getVentas().get(WIDTH).setCantidadDeVentas(String.valueOf(cantidad));
+        }
+    }//GEN-LAST:event_btnAgregarAnioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,23 +211,25 @@ public class PronosticoVentas extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PronosticoVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PronosticoVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PronosticoVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PronosticoVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PronosticoVentas().setVisible(true);
+                new VentanaPrincipal().setVisible(true);
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarAnio;
@@ -193,8 +241,8 @@ public class PronosticoVentas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jT;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable2;
     private javax.swing.JLabel lblDatosV;
     private javax.swing.JTextField txtCantidadAnios;
     private javax.swing.JTextField txtCantidadVentas;
